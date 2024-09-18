@@ -1,4 +1,29 @@
-﻿# express-ts-template
+﻿<div align="center">
+
+# Tomáš Ludwig
+
+[odkaz na web](https://ludwigtomas.cz/)
+
+<img src="https://ludwigtomas.cz/source/skills/avatar.png" alt="ludwig-tomas-avatar" width="50" height="50">
+</div>
+
+
+### :notebook_with_decorative_cover: Summary
+
+-   [Description](#point_right-description)
+-   [Frameworks](#point_right-frameworks)
+-   [Requirements](#point_right-requirements)
+-   [Important](#point_right-important)
+-   [Packages](#point_right-packages)
+    -   [Composer](#composer)
+    -   [NPM](#npm)
+-   [Project setup](#point_right-project-setup)
+    -   [Clone project](#clone-project)
+    -   [Setup ENV file](#setup-env-file)
+    -   [Start project](#point_right-start-project)
+
+
+# express-ts-template
 This projects serves as simple template for express with some additional dependecies.
 *  prisma-client
 *  express
