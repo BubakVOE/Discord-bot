@@ -1,8 +1,8 @@
 ﻿<div align="center">
 
 # Stream chat
-
 ### open source project
+
 </div>
 
 ### :notebook_with_decorative_cover: Summary
