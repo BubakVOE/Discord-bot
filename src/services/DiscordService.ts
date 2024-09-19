@@ -3,6 +3,7 @@ import {commands, ICommand} from '../commands';
 
 
 import dotenv from "dotenv";
+import {NotFoundCommand} from "../commands/other/NotFoundCommand";
 dotenv.config();
 
 const client = new Client({
@@ -56,9 +57,11 @@ function handleMessageCreate(message: Message) {
 
     if (!commandName) return;
 
-    const command = commands.find((command: ICommand) => command.name === commandName);
+    let command = commands.find((command: ICommand) => command.name === commandName);
 
-    if (!command) return;
+    if (!command) {
+        command = new NotFoundCommand;
+    }
 
     command.execute(message, args);
 }
