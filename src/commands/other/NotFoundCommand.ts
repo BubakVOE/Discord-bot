@@ -11,7 +11,7 @@ export class NotFoundCommand implements ICommand {
     name = '404';
 
     async execute(message: Message, args: Array<string>): Promise<void> {
-        let error_message = this.commandName ? '`'+ this.commandName +'.` ' : '`Command not found.`';
+        let error_message = this.commandName ? '`'+ this.commandName +'`. ' : '`Command not found.`';
 
         message.reply(error_message + 'Use `help` to see all available commands.');
     }

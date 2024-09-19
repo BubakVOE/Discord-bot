@@ -3,13 +3,17 @@ import { ICommand } from '../index';
 import axios from 'axios';
 
 const TOKEN_URL = "https://id.twitch.tv/oauth2/token";
-const STREAMING_PARAMS = [
-    "client_id=" + process.env.TWITCH_CLIENT_ID,
-    "client_secret=" + process.env.TWITCH_TOKEN,
-    "grant_type=client_credentials"
-];
-const isHeStreaming = async (): Promise<boolean> => {
+const isHeStreaming = async (
+    channel: string = 'bubakvoe'
+): Promise<boolean> => {
     return new Promise<boolean>((resolve, reject) => {
+
+        const STREAMING_PARAMS = [
+            "client_id=" + process.env.TWITCH_CLIENT_ID,
+            "client_secret=" + process.env.TWITCH_TOKEN,
+            "grant_type=client_credentials"
+        ];
+
         axios.post(TOKEN_URL, STREAMING_PARAMS.join('&'), {
             headers: {
                 "content-type": "application/x-www-form-urlencoded"
@@ -20,12 +24,13 @@ const isHeStreaming = async (): Promise<boolean> => {
             if (!twitchToken) {
                 resolve(false);
             }
-            axios.get("https://api.twitch.tv/helix/streams?user_id=64874795", {
+            axios.get("https://api.twitch.tv/helix/streams?user_login="+channel, {
                 headers: {
                     'Client-ID': process.env.TWITCH_CLIENT_ID,
                     'Authorization': `Bearer ${twitchToken}`
                 }
             }).then((streaming) => {
+                // console.log(streaming);
                 resolve(streaming.data.data[0] != null);
             }).catch((error) => {
                 console.error('Error checking stream status:', error);
@@ -57,11 +62,13 @@ const isHeStreaming = async (): Promise<boolean> => {
 export class StreamingCommand implements ICommand {
     name = 'streaming';
     async execute(message: Message, args: Array<string>): Promise<void> {
-        const response = await isHeStreaming();
+        const channel = args[0] ?? 'bubakvoe';
+        const response = await isHeStreaming(channel);
         if (response) {
-            message.reply("yes");
-        } else {
-            message.reply("no");
+            message.reply(`Yes, **${channel}** is streaming!`);
+        }
+        else {
+            message.reply(`No, **${channel}** is not streaming!`);
         }
     }
 }
