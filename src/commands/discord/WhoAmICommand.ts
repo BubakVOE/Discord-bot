@@ -4,6 +4,6 @@ import { ICommand } from '../index';
 export class WhoAmICommand implements ICommand {
     name = 'who';
     async execute(message: Message, args: Array<string>): Promise<void> {
-        message.reply(`https://ludwigtomas.cz/`);
+        message.reply('https://ludwigtomas.cz/ | https://tomdavid.cz/');
     }
 }
