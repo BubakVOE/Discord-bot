@@ -3,7 +3,7 @@ import { isHeStreaming } from './services/TwitchService';
 
 async function startServices() {
     await connectingToDiscord();
-    await isHeStreaming();
+    // await isHeStreaming();
 }
 
 startServices();

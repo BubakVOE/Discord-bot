@@ -1,7 +1,11 @@
 import { Message } from 'discord.js';
-import { TestCommand } from './TestCommand';
-import { WhoAmICommand } from './WhoAmICommand';
-import { StreamingCommand } from './StreamingCommand';
+// Discord
+import { WhoAmICommand } from './discord/WhoAmICommand';
+// Twitch
+import { StreamingCommand } from './twitch/StreamingCommand';
+// Other
+import { ShowAllCommand } from './other/AllCommand';
+import { TestCommand } from './other/TestCommand';
 
 export interface ICommand {
     name: string;
@@ -9,7 +13,10 @@ export interface ICommand {
 }
 
 export const commands: ICommand[] = [
-    new TestCommand(),
     new WhoAmICommand(),
+
     new StreamingCommand(),
+
+    new ShowAllCommand(),
+    new TestCommand(),
 ];

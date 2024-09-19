@@ -1,5 +1,5 @@
 import { Message } from 'discord.js';
-import { ICommand } from './index';
+import { ICommand } from '../index';
 
 export class TestCommand implements ICommand {
     name = 'test';
