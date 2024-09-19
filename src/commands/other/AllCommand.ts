@@ -1,9 +1,13 @@
 import { Message } from 'discord.js';
-import { ICommand } from '../index';
+import {commands, ICommand} from '../index';
 
 export class ShowAllCommand implements ICommand {
     name = 'help';
     async execute(message: Message, args: Array<string>): Promise<void> {
-        message.reply('```.who \n.streaming```');
+        const replyPayload = commands.map(command => {
+            return `.${command.name}`;
+        }).join('\n');
+
+        message.reply('```'+replyPayload+'```');
     }
 }
