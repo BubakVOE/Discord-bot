@@ -1,5 +1,7 @@
-import { ActivityType, Client, GatewayIntentBits, Message } from 'discord.js';
-import { commands, ICommand } from '../commands';3
+import {ActivityType, Client, GatewayIntentBits, Message} from 'discord.js';
+import {commands, ICommand} from '../commands';
+
+
 import dotenv from "dotenv";
 dotenv.config();
 // import './config/dotenvConfig'; // Import the dotenv configuration
@@ -28,30 +30,30 @@ function connectedToDiscord() {
 }
 
 function setBotPresence() {
-    if(client.user){
-        console.log('[Discord] setting bot presence - ' + new Date().toLocaleString());
-
-        client.user.setPresence({
-            activities: [
-                {
-                    name: '.help',
-                    type: ActivityType.Watching
-                }, {
-                    name: 'your messages',
-                    type: ActivityType.Listening
-                }
-            ],
-            status: 'dnd',
-        });
-    } else {
+    if (!client || !client.user) {
         console.log('[Discord] bot presence not set - ' + new Date().toLocaleString());
+        return;
     }
+    console.log('[Discord] setting bot presence - ' + new Date().toLocaleString());
+
+    client.user.setPresence({
+        activities: [
+            {
+                name: '.help',
+                type: ActivityType.Watching
+            }, {
+                name: 'your messages',
+                type: ActivityType.Listening
+            }
+        ],
+        status: 'dnd',
+    });
 }
 
 function handleMessageCreate(message: Message) {
     if (message.author.bot || !message.content.startsWith(".")) return;
 
-    const { commandName, args } = parseCommand(message.content);
+    const {commandName, args} = parseCommand(message.content);
     if (!commandName) return;
 
     const command = commands.find((command: ICommand) => command.name === commandName);
@@ -63,5 +65,5 @@ function handleMessageCreate(message: Message) {
 function parseCommand(content: string) {
     const args = content.slice(1).trim().split(/ +/g);
     const commandName = args.shift()?.toLowerCase();
-    return { commandName, args };
+    return {commandName, args};
 }
