@@ -34,7 +34,7 @@
 
 # :point_right: Project setup
 ```sh
-git clone https://gitlab.com/bubak1/portfolio/ludwig-tomas.git
+git clone https://github.com/BubakVOE/Discord-bot.git
 ```
 ```sh
 cd Discord-bot
@@ -46,7 +46,7 @@ npm i
 npm run dev
 ```
 
-[autor-1](https://ludwigtomas.cz/)
-[autor-2](https://seznam.cz/)
-[autor-3](https://seznam.cz/)
-[autor-4](https://seznam.cz/)
+-   [autor-1](https://ludwigtomas.cz/)
+-   [autor-2](https://seznam.cz/)
+-   [autor-3](https://seznam.cz/)
+-   [autor-4](https://seznam.cz/)
