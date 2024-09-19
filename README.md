@@ -1,7 +1,7 @@
 ﻿<div align="center">
 
 # Stream chat
-### open source project
+### open source
 
 </div>
 
