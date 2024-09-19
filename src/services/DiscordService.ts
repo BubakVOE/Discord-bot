@@ -48,7 +48,6 @@ function setBotPresence() {
 
 function handleMessageCreate(message: Message) {
     if (message.author.bot || !message.content.startsWith(".")) return;
-
     const { commandName, args } = parseCommand(message.content);
 
     let command = commands.find((command: ICommand) => command.name === commandName) ?? new NotFoundCommand(args[0]);
