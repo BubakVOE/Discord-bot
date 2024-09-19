@@ -4,7 +4,6 @@ import {commands, ICommand} from '../commands';
 
 import dotenv from "dotenv";
 dotenv.config();
-// import './config/dotenvConfig'; // Import the dotenv configuration
 
 const client = new Client({
     intents: [
@@ -53,17 +52,23 @@ function setBotPresence() {
 function handleMessageCreate(message: Message) {
     if (message.author.bot || !message.content.startsWith(".")) return;
 
-    const {commandName, args} = parseCommand(message.content);
+    const { commandName, args } = parseCommand(message.content);
+
     if (!commandName) return;
 
     const command = commands.find((command: ICommand) => command.name === commandName);
+
     if (!command) return;
 
     command.execute(message, args);
 }
 
 function parseCommand(content: string) {
-    const args = content.slice(1).trim().split(/ +/g);
+    if (!content.startsWith('.god')) {
+        return { commandName: null, args: [] };
+    }
+
+    const args = content.slice(5).trim().split(/ +/g);
     const commandName = args.shift()?.toLowerCase();
-    return {commandName, args};
+    return { commandName, args };
 }

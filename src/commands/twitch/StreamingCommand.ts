@@ -1,5 +1,5 @@
 import { Message } from 'discord.js';
-import { ICommand } from './index';
+import { ICommand } from '../index';
 import axios from 'axios';
 
 const TOKEN_URL = "https://id.twitch.tv/oauth2/token";

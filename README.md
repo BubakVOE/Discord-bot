@@ -1,49 +1,52 @@
 ﻿<div align="center">
 
-# Tomáš Ludwig
+# Stream chat
+### open source
 
-[odkaz na web](https://ludwigtomas.cz/)
-
-<img src="https://ludwigtomas.cz/source/skills/avatar.png" alt="ludwig-tomas-avatar" width="50" height="50">
 </div>
-
 
 ### :notebook_with_decorative_cover: Summary
 
 -   [Description](#point_right-description)
 -   [Frameworks](#point_right-frameworks)
 -   [Requirements](#point_right-requirements)
--   [Important](#point_right-important)
 -   [Packages](#point_right-packages)
-    -   [Composer](#composer)
-    -   [NPM](#npm)
 -   [Project setup](#point_right-project-setup)
-    -   [Clone project](#clone-project)
-    -   [Setup ENV file](#setup-env-file)
-    -   [Start project](#point_right-start-project)
 
 
-# express-ts-template
-This projects serves as simple template for express with some additional dependecies.
-*  prisma-client
-*  express
-*  typescript
-*  cors
-*  body-parser
-*  dotenv
-*  nodemon
-*  ts-node
+## :point_right: Description
+- Node app to check if the streamer is live and then send it to the Discord channel.
 
-# How to setup this project (Windows VSC)
-*   <code>git clone https://github.com/JustKordy/express-ts-template.git   </code>
-*   <code>cd ./express-ts-template   </code>
-*   <code>npm i -d</code>
-*   <code>npm run dev</code>
+## :point_right: Frameworks
 
-# How to setup this project (Mac VSC)
-*   <code>git clone https://github.com/JustKordy/express-ts-template.git   </code>
-*   <code>cd ./express-ts-template   </code>
-*   <code>sudo npm i -d</code>
-*   <code>sudo npm i -g nodemon</code>
-*   <code>sudo npm i -g ts-node</code>
-*   <code>sudo npm run dev</code>
+-   Node
+-   TypeScript
+
+## :point_right: Requirements
+
+- Node 16+ and higher
+- Npm 8+ and higher
+
+## :point_right: Packages
+
+- [dotenv](https://www.npmjs.com/package/dotenv)
+- [Discord.js](https://discord.js.org/docs/packages/discord.js/14.16.2)
+
+# :point_right: Project setup
+```sh
+git clone https://github.com/BubakVOE/Discord-bot.git
+```
+```sh
+cd Discord-bot
+```
+```sh
+npm i
+```
+```sh
+npm run dev
+```
+
+-   [autor-1](https://ludwigtomas.cz/)
+-   [autor-2](https://seznam.cz/)
+-   [autor-3](https://seznam.cz/)
+-   [autor-4](https://seznam.cz/)
