@@ -6,6 +6,7 @@ import { StreamingCommand } from './twitch/StreamingCommand';
 // Other
 import { ShowAllCommand } from './other/AllCommand';
 import { TestCommand } from './other/TestCommand';
+import {BanCommand} from "./discord/BanCommand";
 
 export interface ICommand {
     name: string;
@@ -19,4 +20,6 @@ export const commands: ICommand[] = [
 
     new ShowAllCommand(),
     new TestCommand(),
+
+    new BanCommand(),
 ];
