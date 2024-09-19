@@ -1,7 +1,6 @@
 import {ActivityType, Client, GatewayIntentBits, Message} from 'discord.js';
 import {commands, ICommand} from '../commands';
 
-
 import dotenv from "dotenv";
 import {NotFoundCommand} from "../commands/other/NotFoundCommand";
 dotenv.config();
@@ -41,9 +40,6 @@ function setBotPresence() {
             {
                 name: '.help',
                 type: ActivityType.Watching
-            }, {
-                name: 'your messages',
-                type: ActivityType.Listening
             }
         ],
         status: 'dnd',
@@ -55,23 +51,25 @@ function handleMessageCreate(message: Message) {
 
     const { commandName, args } = parseCommand(message.content);
 
-    if (!commandName) return;
-
-    let command = commands.find((command: ICommand) => command.name === commandName);
-
-    if (!command) {
-        command = new NotFoundCommand;
-    }
+    let command = commands.find((command: ICommand) => command.name === commandName) ?? new NotFoundCommand(args[0]);
 
     command.execute(message, args);
 }
 
 function parseCommand(content: string) {
     if (!content.startsWith('.god')) {
-        return { commandName: null, args: [] };
+        return { commandName: null, args: ['bad prefix'] };
+    }
+
+    const words = content.split(' ');
+
+    if (words.length < 2) {
+        return { commandName: null, args: ['not enough arguments'] };
     }
 
     const args = content.slice(5).trim().split(/ +/g);
+
     const commandName = args.shift()?.toLowerCase();
+
     return { commandName, args };
 }

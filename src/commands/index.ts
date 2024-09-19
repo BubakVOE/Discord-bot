@@ -4,7 +4,7 @@ import { WhoAmICommand } from './discord/WhoAmICommand';
 // Twitch
 import { StreamingCommand } from './twitch/StreamingCommand';
 // Other
-import { ShowAllCommand } from './other/AllCommand';
+import { HelpCommand } from './other/HelpCommand';
 import { TestCommand } from './other/TestCommand';
 
 export interface ICommand {
@@ -17,6 +17,6 @@ export const commands: ICommand[] = [
 
     new StreamingCommand(),
 
-    new ShowAllCommand(),
+    new HelpCommand(),
     new TestCommand(),
 ];
