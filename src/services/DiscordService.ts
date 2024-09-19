@@ -1,5 +1,7 @@
-import { ActivityType, Client, GatewayIntentBits, Message } from 'discord.js';
-import { commands, ICommand } from '../commands';3
+import {ActivityType, Client, GatewayIntentBits, Message} from 'discord.js';
+import {commands, ICommand} from '../commands';
+
+
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -27,24 +29,24 @@ function connectedToDiscord() {
 }
 
 function setBotPresence() {
-    if(client.user){
-        console.log('[Discord] setting bot presence - ' + new Date().toLocaleString());
-
-        client.user.setPresence({
-            activities: [
-                {
-                    name: '.help',
-                    type: ActivityType.Watching
-                }, {
-                    name: 'your messages',
-                    type: ActivityType.Listening
-                }
-            ],
-            status: 'dnd',
-        });
-    } else {
+    if (!client || !client.user) {
         console.log('[Discord] bot presence not set - ' + new Date().toLocaleString());
+        return;
     }
+    console.log('[Discord] setting bot presence - ' + new Date().toLocaleString());
+
+    client.user.setPresence({
+        activities: [
+            {
+                name: '.help',
+                type: ActivityType.Watching
+            }, {
+                name: 'your messages',
+                type: ActivityType.Listening
+            }
+        ],
+        status: 'dnd',
+    });
 }
 
 function handleMessageCreate(message: Message) {
