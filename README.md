@@ -2,6 +2,7 @@
 
 # Stream chat
 
+### open source project
 </div>
 
 ### :notebook_with_decorative_cover: Summary
@@ -14,7 +15,6 @@
 
 
 ## :point_right: Description
-- Open source
 - Node app to check if the streamer is live and then send it to the Discord channel.
 
 ## :point_right: Frameworks
