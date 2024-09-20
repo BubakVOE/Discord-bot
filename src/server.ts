@@ -1,9 +1,10 @@
 import Log from '@/helper/Logging';
+// import InitService from './services/InitService';
 
 async function startServices() {
-    console.log('[Server] starting');
     Log('[Server] starting');
-}
 
+    // await InitService();
+}
 
 startServices();
