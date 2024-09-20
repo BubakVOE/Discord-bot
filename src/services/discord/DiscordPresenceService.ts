@@ -1,4 +1,4 @@
-import { ActivityType, Client, GatewayIntentBits, Message } from 'discord.js';
+import { ActivityType, Client } from 'discord.js';
 
 export default function discordPresenceService(client: Client) {
     if (!client || !client.user) {

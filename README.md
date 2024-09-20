@@ -51,9 +51,11 @@ npm run dev
 ```sh
 cp .env.example
 ```
+
 ```sh
 nano .env
 ```
+
 ```sh
 PREFIX
 DISCORD_CLIENT_ID

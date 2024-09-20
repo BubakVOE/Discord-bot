@@ -1,6 +1,6 @@
-import { ActivityType, Client, GatewayIntentBits, Message } from 'discord.js';
-import { commands, ICommand } from '../../commands';
-import { NotFoundCommand } from "../../commands/other/NotFoundCommand";
+import { Client, GatewayIntentBits, Message } from 'discord.js';
+import { commands, ICommand } from '@/commands';
+import { NotFoundCommand } from "@/commands/other/NotFoundCommand";
 import discordPresenceService from '@/services/discord/DiscordPresenceService';
 
 const client = new Client({
