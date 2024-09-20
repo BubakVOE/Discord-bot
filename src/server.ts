@@ -1,9 +1,9 @@
-import { connectingToDiscord } from './services/DiscordService';
-import { isHeStreaming } from './services/TwitchService';
+import Log from '@/helper/Logging';
 
 async function startServices() {
-    await connectingToDiscord();
-    // await isHeStreaming();
+    console.log('[Server] starting');
+    Log('[Server] starting');
 }
+
 
 startServices();

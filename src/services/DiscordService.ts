@@ -1,8 +1,6 @@
-import {ActivityType, Client, GatewayIntentBits, Message} from 'discord.js';
-import {commands, ICommand} from '../commands';
-import {NotFoundCommand} from "../commands/other/NotFoundCommand";
-import * as dotenv from "dotenv";
-dotenv.config();
+import { ActivityType, Client, GatewayIntentBits, Message } from 'discord.js';
+import { commands, ICommand } from '../commands';
+import { NotFoundCommand } from "../commands/other/NotFoundCommand";
 
 const client = new Client({
     intents: [
@@ -13,7 +11,7 @@ const client = new Client({
     ]
 });
 
-export async function connectingToDiscord() {
+export async function DiscordService() {
     console.log('[Discord] connecting .... - ' + new Date().toLocaleString());
 
     await client.login(process.env.DISCORD_TOKEN);
