@@ -46,7 +46,7 @@ npm i
 npm run dev
 ```
 
--   [autor-1](https://ludwigtomas.cz/)
--   [autor-2](https://seznam.cz/)
--   [autor-3](https://seznam.cz/)
+-   Creator - [BubakVOE](https://ludwigtomas.cz/)
+-   Contributor [tomasdav9](https://tomdavid.cz/)
+-   Contributor [Kordys](https://seznam.cz/)
 -   [autor-4](https://seznam.cz/)
