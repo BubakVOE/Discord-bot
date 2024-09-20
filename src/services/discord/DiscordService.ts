@@ -38,6 +38,10 @@ function handleMessageCreate(message: Message) {
 }
 
 function parseCommand(content: string) {
+    if(!process.env.PREFIX) {
+        return { commandName: null, args: ['ENV variable PREFIX not set'] };
+    }
+
     if (!content.startsWith(process.env.PREFIX as string)) {
         return { commandName: null, args: ['Use ' + process.env.PREFIX as string] };
     }
