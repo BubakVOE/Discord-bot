@@ -49,4 +49,3 @@ npm run dev
 -   Creator - [BubakVOE](https://ludwigtomas.cz/)
 -   Contributor [tomasdav9](https://tomdavid.cz/)
 -   Contributor [Kordys](https://seznam.cz/)
--   [autor-4](https://seznam.cz/)
