@@ -39,7 +39,7 @@ function handleMessageCreate(message: Message) {
 
 function parseCommand(content: string) {
     if (!content.startsWith(process.env.PREFIX as string)) {
-        return { commandName: null, args: ['bad prefix'] };
+        return { commandName: null, args: ['Bad prefix use ' + process.env.PREFIX as string] };
     }
 
     const words = content.split(' ');
