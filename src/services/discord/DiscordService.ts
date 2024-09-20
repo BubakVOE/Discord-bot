@@ -38,7 +38,7 @@ function handleMessageCreate(message: Message) {
 }
 
 function parseCommand(content: string) {
-    if (!content.startsWith('.god')) {
+    if (!content.startsWith(process.env.PREFIX as string)) {
         return { commandName: null, args: ['bad prefix'] };
     }
 
