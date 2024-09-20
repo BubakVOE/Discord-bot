@@ -4,6 +4,7 @@
     "description": "",
     "main": "server.ts",
     "scripts": {
+        "build": "tsc",
         "test": "echo \"Error: no test specified\" && exit 1",
         "dev": "nodemon src/server.ts"
     },
@@ -16,7 +17,7 @@
         "ts",
         "template"
     ],
-    "author": "Kordys",
+    "author": "BubakVOE",
     "license": "ISC",
     "bugs": {
         "url": "https://github.com/JustKordy/express-ts-template/issues"

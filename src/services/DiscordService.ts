@@ -1,8 +1,7 @@
 import {ActivityType, Client, GatewayIntentBits, Message} from 'discord.js';
 import {commands, ICommand} from '../commands';
-
-import dotenv from "dotenv";
 import {NotFoundCommand} from "../commands/other/NotFoundCommand";
+import * as dotenv from "dotenv";
 dotenv.config();
 
 const client = new Client({
