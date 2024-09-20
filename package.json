@@ -6,7 +6,8 @@
     "scripts": {
         "build": "tsc",
         "dev": "nodemon --exec ts-node -r tsconfig-paths/register src/server.ts",
-        "start": "node tsconfig-paths-bootstrap.js"
+        "start": "node tsconfig-paths-bootstrap.js",
+        "pm2:start": "pm2 start ecosystem.config.js --env production"
     },
     "repository": {
         "type": "git",
