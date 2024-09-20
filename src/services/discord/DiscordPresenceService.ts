@@ -1,6 +1,6 @@
 import { ActivityType, Client, GatewayIntentBits, Message } from 'discord.js';
 
-export default function botPresenceService(client: Client) {
+export default function discordPresenceService(client: Client) {
     if (!client || !client.user) {
         console.log('[Discord] bot presence not set - ' + new Date().toLocaleString());
         return;

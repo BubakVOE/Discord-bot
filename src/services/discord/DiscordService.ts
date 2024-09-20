@@ -1,6 +1,7 @@
 import { ActivityType, Client, GatewayIntentBits, Message } from 'discord.js';
-import { commands, ICommand } from '../commands';
-import { NotFoundCommand } from "../commands/other/NotFoundCommand";
+import { commands, ICommand } from '../../commands';
+import { NotFoundCommand } from "../../commands/other/NotFoundCommand";
+import discordPresenceService from '@/services/discord/DiscordPresenceService';
 
 const client = new Client({
     intents: [
@@ -11,36 +12,20 @@ const client = new Client({
     ]
 });
 
-export async function DiscordService() {
+export default async function discordService() {
     console.log('[Discord] connecting .... - ' + new Date().toLocaleString());
 
     await client.login(process.env.DISCORD_TOKEN);
+
     client.on('ready', connectedToDiscord);
 }
 
 function connectedToDiscord() {
     console.log('[Discord] connected! - ' + new Date().toLocaleString());
 
-    setBotPresence();
+    discordPresenceService(client);
+
     client.on("messageCreate", handleMessageCreate);
-}
-
-function setBotPresence() {
-    if (!client || !client.user) {
-        console.log('[Discord] bot presence not set - ' + new Date().toLocaleString());
-        return;
-    }
-    console.log('[Discord] setting bot presence - ' + new Date().toLocaleString());
-
-    client.user.setPresence({
-        activities: [
-            {
-                name: '.help',
-                type: ActivityType.Watching
-            }
-        ],
-        status: 'dnd',
-    });
 }
 
 function handleMessageCreate(message: Message) {

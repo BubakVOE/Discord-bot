@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export async function TwitchService() {
+export default async function twitchService() {
     console.log('[Twitch] connecting .... - ' + new Date().toLocaleString());
 
     const url = "https://id.twitch.tv/oauth2/token";
