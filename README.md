@@ -12,6 +12,7 @@
 -   [Requirements](#point_right-requirements)
 -   [Packages](#point_right-packages)
 -   [Project setup](#point_right-project-setup)
+    -   [Env setup](#point_right-env-setup)
 
 
 ## :point_right: Description
@@ -44,6 +45,19 @@ npm i
 ```
 ```sh
 npm run dev
+```
+
+# :point_right: Env setup
+```sh
+cp .env.example
+```
+```sh
+nano .env
+```
+```sh
+PREFIX
+DISCORD_CLIENT_ID
+DISCORD_TOKEN
 ```
 
 -   Creator - [BubakVOE](https://ludwigtomas.cz/)
