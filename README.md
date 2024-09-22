@@ -65,3 +65,6 @@ DISCORD_TOKEN
 -   Creator - [BubakVOE](https://ludwigtomas.cz/)
 -   Contributor [tomasdav9](https://tomdavid.cz/)
 -   Contributor [Kordys](https://seznam.cz/)
+
+
+[twitch Token](https://dev.twitch.tv/console/apps/)
