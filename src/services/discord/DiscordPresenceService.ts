@@ -2,11 +2,11 @@ import { ActivityType, Client } from 'discord.js';
 
 export default function discordPresenceService(client: Client) {
     if (!client || !client.user) {
-        console.log('[Discord] bot presence not set - ' + new Date().toLocaleString());
+        Log('[Discord] bot presence not set');
         return;
     }
 
-    console.log('[Discord] setting bot presence - ' + new Date().toLocaleString());
+    Log('[Discord] setting bot presence');
 
     client.user.setPresence({
         activities: [

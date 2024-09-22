@@ -9,7 +9,7 @@ for (const alias in tsConfig.compilerOptions.paths) {
   paths[alias] = tsConfig.compilerOptions.paths[alias].map(p => p.replace('src', 'dist'));
 }
 
-console.log('Registering paths:', { baseUrl, paths });
+Logger.log('Registering paths:', { baseUrl, paths });
 
 tsConfigPaths.register({ baseUrl, paths });
 

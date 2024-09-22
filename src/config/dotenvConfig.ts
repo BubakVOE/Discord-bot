@@ -4,4 +4,4 @@ import path from 'path';
 // Load environment variables from .env file
 dotenv.config({ path: path.resolve(__dirname, '../../.env') });
 
-console.log('Environment variables loaded from .env file');
+Log('Environment variables loaded from .env file');

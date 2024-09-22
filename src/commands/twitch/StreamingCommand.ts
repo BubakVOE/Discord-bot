@@ -1,6 +1,5 @@
 import { Message } from 'discord.js';
 import { ICommand } from '../index';
-import axios from 'axios';
 import { isHeStreaming } from '@/services/twitch/TwitchService';
 
 export class StreamingCommand implements ICommand {

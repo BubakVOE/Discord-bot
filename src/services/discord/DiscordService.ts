@@ -13,7 +13,7 @@ const client = new Client({
 });
 
 export default async function discordService() {
-    console.log('[Discord] connecting .... - ' + new Date().toLocaleString());
+    Log('[Discord] connecting ....');
 
     await client.login(process.env.DISCORD_TOKEN);
 
@@ -21,7 +21,7 @@ export default async function discordService() {
 }
 
 function connectedToDiscord() {
-    console.log('[Discord] connected! - ' + new Date().toLocaleString());
+    Log('[Discord] connected!');
 
     discordPresenceService(client);
 
