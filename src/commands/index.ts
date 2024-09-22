@@ -2,6 +2,7 @@ import { Message } from 'discord.js';
 // Discord
 import { WhoAmICommand } from './discord/WhoAmICommand';
 // Twitch
+import { LiveStreamingCommand } from './twitch/LiveStreamingCommand';
 import { StreamingCommand } from './twitch/StreamingCommand';
 // Other
 import { HelpCommand } from './other/HelpCommand';
@@ -16,6 +17,7 @@ export interface ICommand {
 export const commands: ICommand[] = [
     new WhoAmICommand(),
 
+    new LiveStreamingCommand(),
     new StreamingCommand(),
 
     new HelpCommand(),

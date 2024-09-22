@@ -1,21 +1,15 @@
 import { Message } from 'discord.js';
 import { ICommand } from '../index';
-import { isHeStreaming } from '@/services/twitch/TwitchService';
+import LiveStreamingTwitchService from '@/services/twitch/LiveStreamingTwitchService';
 
-export class StreamingCommand implements ICommand {
-    name = 'streaming';
+export class LiveStreamingCommand implements ICommand {
+    name = 'live';
     async execute(
         message: Message,
         args: Array<string>
     ): Promise<void> {
-        const channel = args[0] ?? 'bubakvoe';
-        const response = await isHeStreaming(channel);
-        if (response) {
-            message.reply(`Yes, **${channel}** is streaming!`);
-        }
-        else {
-            message.reply(`No, **${channel}** is not streaming!`);
-        }
+        const response = await LiveStreamingTwitchService();
+            message.reply('Yes, is strawdawdaeaming! ' + response);
     }
 }
 
