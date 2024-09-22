@@ -1,6 +1,6 @@
 import { Message } from 'discord.js';
 import { ICommand } from '../index';
-import LiveStreamingTwitchService from '@/services/twitch/LiveStreamingTwitchService';
+import { getAllSubscriptions } from '@/services/twitch/LiveStreamingTwitchService';
 
 export class LiveStreamingCommand implements ICommand {
     name = 'live';
@@ -8,8 +8,8 @@ export class LiveStreamingCommand implements ICommand {
         message: Message,
         args: Array<string>
     ): Promise<void> {
-        const response = await LiveStreamingTwitchService();
-            message.reply('Yes, is strawdawdaeaming! ' + response);
+        const response = await getAllSubscriptions();
+            message.reply('Yes, is strawdawdaeaming!');
     }
 }
 

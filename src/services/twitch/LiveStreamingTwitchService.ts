@@ -1,110 +1,120 @@
-import { Response, Request } from 'express';
+import * as dotenv from "dotenv";
+dotenv.config();
 
-import crypto from 'node:crypto';
-import express from 'express';
+import { WebSocket } from "ws";
 
-const app = express();
-const port = 8080;
+const ws = new WebSocket("wss://eventsub.wss.twitch.tv/ws");
 
-export default async function LiveStreamingTwitchService() {
-
-    // Notification request headers
-    const TWITCH_MESSAGE_ID = 'Twitch-Eventsub-Message-Id'.toLowerCase();
-    const TWITCH_MESSAGE_TIMESTAMP = 'Twitch-Eventsub-Message-Timestamp'.toLowerCase();
-    const TWITCH_MESSAGE_SIGNATURE = 'Twitch-Eventsub-Message-Signature'.toLowerCase();
-    const MESSAGE_TYPE = 'Twitch-Eventsub-Message-Type'.toLowerCase();
-
-    // Notification message types
-    const MESSAGE_TYPE_VERIFICATION = 'webhook_callback_verification';
-    const MESSAGE_TYPE_NOTIFICATION = 'notification';
-    const MESSAGE_TYPE_REVOCATION = 'revocation';
-
-    // Prepend this string to the HMAC that's created from the message
-    const HMAC_PREFIX = 'sha256=';
-
-    app.use(express.raw({          // Need raw message body for signature verification
-        type: 'application/json'
-    }))
-
-    app.post('/eventsub', (
-        req: Request,
-        res: Response,
-    ) => {
-        let secret = getSecret();
-        let message = getHmacMessage(req);
-        let hmac = HMAC_PREFIX + getHmac(secret, message);  // Signature to compare
-
-        if (true === verifyMessage(hmac, req.headers[TWITCH_MESSAGE_SIGNATURE] as string)) {
-            console.log("signatures match");
-
-            // Get JSON object from body, so you can process the message.
-            let notification = JSON.parse(req.body);
-
-            if (MESSAGE_TYPE_NOTIFICATION === req.headers[MESSAGE_TYPE]) {
-                // TODO: Do something with the event's data.
-
-                console.log(`Event type: ${notification.subscription.type}`);
-                console.log(JSON.stringify(notification.event, null, 4));
-
-                res.sendStatus(204);
-            }
-            else if (MESSAGE_TYPE_VERIFICATION === req.headers[MESSAGE_TYPE]) {
-                res.set('Content-Type', 'text/plain').status(200).send(notification.challenge);
-            }
-            else if (MESSAGE_TYPE_REVOCATION === req.headers[MESSAGE_TYPE]) {
-                res.sendStatus(204);
-
-                console.log(`${notification.subscription.type} notifications revoked!`);
-                console.log(`reason: ${notification.subscription.status}`);
-                console.log(`condition: ${JSON.stringify(notification.subscription.condition, null, 4)}`);
-            }
-            else {
-                res.sendStatus(204);
-                console.log(`Unknown message type: ${req.headers[MESSAGE_TYPE]}`);
-            }
+ws.onmessage = async (event) => {
+    try {
+        const data = JSON.parse(event.data.toString());
+        if (data.metadata.message_type === "session_welcome") {
+            const sessionId = data.payload.session.id;
+            await subscribeToLiveStream(sessionId);
         }
-        else {
-            console.log('403');    // Signatures didn't match.
-            res.sendStatus(403);
+
+        console.log(data);
+    } catch (error: any) {
+        console.error("Error parsing JSON data", error);
+    }
+};
+
+ws.onclose = async () => {
+    await getAllSubscriptions();
+}
+
+async function subscribeToLiveStream(sessionId: number, userId = 64_874_795) {
+    fetch("https://api.twitch.tv/helix/eventsub/subscriptions", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Client-Id": `q6batx0epp608isickayubi39itsckt`,
+            Authorization: `Bearer ${process.env.TWITCH_OAUTH}`,
+        },
+        body: JSON.stringify({
+            type: "stream.online",
+            version: "1",
+            condition: {
+                broadcaster_user_id: `${userId}`,
+            },
+            transport: {
+                method: "websocket",
+                session_id: sessionId,
+            },
+        }),
+    })
+        .then((response) => response.json())
+        .then((data) => console.log(data))
+        .catch((error) => console.error("Error:", error));
+}
+
+export async function getAllSubscriptions() {
+    fetch("https://api.twitch.tv/helix/eventsub/subscriptions", {
+        method: "GET",
+
+        headers: {
+            Authorization: `Bearer ${process.env.TWITCH_OAUTH}`,
+            "Client-Id": `q6batx0epp608isickayubi39itsckt`,
+        },
+    })
+        .then((response) => response.json())
+        .then((data) => deleteAllSubscriptions(data))
+        .catch((error) => {
+            console.error("Error:", error);
+        });
+}
+
+async function deleteAllSubscriptions(subscriptions: Root) {
+    for (let index = 0; index < subscriptions.data.length; index++) {
+        const element = subscriptions.data[index];
+
+        try {
+            fetch(`https://api.twitch.tv/helix/eventsub/subscriptions?id=${element.id}`, {
+                method: "DELETE",
+                headers: {
+                    Authorization: `Bearer ${process.env.TWITCH_OAUTH}`,
+                    "Client-Id": `q6batx0epp608isickayubi39itsckt`,
+                },
+            })
+                .then((response) => response.json())
+                .then((data) => console.log(data))
+                .catch((error) => {
+                    console.error("Error:", error);
+                });
+        } catch (error) {
+            console.error("Error deleting subscription", error);
         }
-    })
-
-    app.listen(port, () => {
-        console.log(`Example app listening at http://localhost:${port}`);
-    })
-
-
-    function getSecret() {
-        // TODO: Get secret from secure storage. This is the secret you pass
-        // when you subscribed to the event.
-        return 'your secret goes here';
-    }
-
-    // Build the message used to get the HMAC.
-    function getHmacMessage(
-        request: Request
-    ) {
-        return (request.headers[TWITCH_MESSAGE_ID] as string +
-            request.headers[TWITCH_MESSAGE_TIMESTAMP] as string +
-            request.body
-        );
-    }
-
-    // Get the HMAC.
-    function getHmac(
-        secret: string,
-        message: string,
-    ) {
-        return crypto.createHmac('sha256', secret)
-            .update(message)
-            .digest('hex');
-    }
-
-    // Verify whether our hash matches the hash that Twitch passed in the header.
-    function verifyMessage(
-        hmac: string,
-        verifySignature: string,
-    ) {
-        return crypto.timingSafeEqual(Buffer.from(hmac), Buffer.from(verifySignature));
     }
 }
+
+export interface Root {
+    total: number
+    data: Daum[]
+    max_total_cost: number
+    total_cost: number
+    pagination: Pagination
+}
+
+export interface Daum {
+    id: string
+    status: string
+    type: string
+    version: string
+    condition: Condition
+    created_at: string
+    transport: Transport
+    cost: number
+}
+
+export interface Condition {
+    broadcaster_user_id: string
+}
+
+export interface Transport {
+    method: string
+    session_id: string
+    connected_at: string
+    disconnected_at: string
+}
+
+export interface Pagination { }
