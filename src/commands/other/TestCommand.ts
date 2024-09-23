@@ -2,8 +2,15 @@ import { Message } from 'discord.js';
 import { ICommand } from '../index';
 
 export class TestCommand implements ICommand {
+
     name = 'test';
     async execute(message: Message, args: Array<string>): Promise<void> {
+
+        console.log('test');
+        console.error('test')
+        console.debug('test')
+        console.info('test')
+
         const streamLink = 'https://www.twitch.tv/bubakvoe';
         const response = `
 @doggo 🐶

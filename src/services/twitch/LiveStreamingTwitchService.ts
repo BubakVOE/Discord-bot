@@ -1,4 +1,4 @@
-import { Client, GatewayIntentBits, TextChannel } from 'discord.js';
+import { Client, GatewayIntentBits, TextChannel } from "discord.js";
 import { WebSocket } from "ws";
 import { Root } from "@/types/twitch";
 import * as dotenv from "dotenv";
@@ -10,36 +10,41 @@ const discord = new Client({
         GatewayIntentBits.MessageContent,
         GatewayIntentBits.GuildMessages,
         GatewayIntentBits.GuildMessageReactions,
-    ]
+    ],
 });
 
-const ws = new WebSocket("wss://eventsub.wss.twitch.tv/ws");
+console.log("[Discord] connecting ....");
+discord.login(process.env.DISCORD_TOKEN).then(() => {
+    const ws = new WebSocket("wss://eventsub.wss.twitch.tv/ws");
 
-ws.onmessage = async (event) => {
-    try {
-        const data = JSON.parse(event.data.toString());
+    ws.onmessage = async (event) => {
+        try {
+            const data = JSON.parse(event.data.toString());
 
-        console.log(data);
+            console.log(data);
 
-        if (data.metadata.message_type === "session_welcome") {
-            const sessionId = data.payload.session.id;
-            await subscribeToLiveStream(sessionId);
+            if (data.metadata.message_type === "session_welcome") {
+                const sessionId = data.payload.session.id;
+                await subscribeToLiveStream(sessionId);
+            }
+
+            if (
+                data.metadata.message_type === "notification" &&
+                data.payload.event.type === "live"
+            ) {
+                await sendDiscordLiveMessage();
+            }
+        } catch (error: any) {
+            console.error("Error parsing JSON data", error);
         }
+    };
 
-        if(data.metadata.message_type === "notification" && data.payload.event.type === "live") {
-            console.log('[Discord] connecting ....');
+    ws.onclose = async () => {
+        await getAllSubscriptions();
+    };
+});
 
-            await discord.login(process.env.DISCORD_TOKEN);
-
-            discord.on('ready', connectedToDiscord);
-        }
-
-    } catch (error: any) {
-        console.error("Error parsing JSON data", error);
-    }
-};
-
-async function connectedToDiscord() {
+async function sendDiscordLiveMessage() {
     try {
         const channelId = process.env.DISCORD_CHANNEL_ID; // Ensure this environment variable is set
         if (!channelId) {
@@ -47,13 +52,13 @@ async function connectedToDiscord() {
             return;
         }
 
-        const channel = await discord.channels.fetch(channelId) as TextChannel;
+        const channel = (await discord.channels.fetch(channelId)) as TextChannel;
         if (!channel) {
             console.error("Channel not found");
             return;
         }
 
-        const streamLink = 'https://www.twitch.tv/bubakvoe';
+        const streamLink = "https://www.twitch.tv/bubakvoe";
         const message = `
 **🎉 Stream právě začal! 🎉**
 
@@ -68,10 +73,6 @@ Užívej stream! 🎬
     } catch (error: any) {
         console.error("Error sending message to Discord channel", error);
     }
-}
-
-ws.onclose = async () => {
-    await getAllSubscriptions();
 }
 
 async function subscribeToLiveStream(sessionId: number, userId = 64_874_795) {
@@ -120,20 +121,25 @@ async function deleteAllSubscriptions(subscriptions: Root) {
         const element = subscriptions.data[index];
 
         try {
-            const response = await fetch('https://api.twitch.tv/helix/eventsub/subscriptions?id=' + element.id, {
-                method: "DELETE",
-                headers: {
-                    Authorization: `Bearer ${process.env.TWITCH_OAUTH}`,
-                    "Client-Id": `q6batx0epp608isickayubi39itsckt`,
-                },
-            });
+            const response = await fetch(
+                "https://api.twitch.tv/helix/eventsub/subscriptions?id=" + element.id,
+                {
+                    method: "DELETE",
+                    headers: {
+                        Authorization: `Bearer ${process.env.TWITCH_OAUTH}`,
+                        "Client-Id": `q6batx0epp608isickayubi39itsckt`,
+                    },
+                }
+            );
 
             if (!response.ok) {
-                console.error(`Failed to delete subscription ${element.id}: ${response.statusText}`);
+                console.error(
+                    `Failed to delete subscription ${element.id}: ${response.statusText}`
+                );
                 continue;
             }
 
-            const contentLength = response.headers.get('content-length');
+            const contentLength = response.headers.get("content-length");
 
             if (contentLength && parseInt(contentLength) > 0) {
                 const data = await response.json();
