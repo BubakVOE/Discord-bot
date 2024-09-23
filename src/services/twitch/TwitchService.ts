@@ -1,8 +1,4 @@
-type TwitchTokenResponse = {
-    access_token: string;
-    expires_in: number;
-    token_type: string;
-};
+import { TwitchTokenResponse } from "@/types/twitch";
 
 let expiresAt = 0;
 let cachedTokenResponse = {

@@ -17,7 +17,7 @@ export interface ICommand {
 export const commands: ICommand[] = [
     new WhoAmICommand(),
 
-    new LiveStreamingCommand(),
+    // new LiveStreamingCommand(),
     new StreamingCommand(),
 
     new HelpCommand(),

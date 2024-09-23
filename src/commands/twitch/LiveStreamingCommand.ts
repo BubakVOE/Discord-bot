@@ -1,5 +1,5 @@
 import { Message } from 'discord.js';
-import { ICommand } from '../index';
+import { ICommand } from '@/commands';
 import { getAllSubscriptions } from '@/services/twitch/LiveStreamingTwitchService';
 
 export class LiveStreamingCommand implements ICommand {
@@ -8,7 +8,7 @@ export class LiveStreamingCommand implements ICommand {
         message: Message,
         args: Array<string>
     ): Promise<void> {
-        const response = await getAllSubscriptions();
-            message.reply('deleting subscriptions!');
+        await getAllSubscriptions();
+        message.reply('deleting subscriptions!');
     }
 }

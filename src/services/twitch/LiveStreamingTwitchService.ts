@@ -1,8 +1,8 @@
-import * as dotenv from "dotenv";
-dotenv.config();
 import { Client, GatewayIntentBits, TextChannel } from 'discord.js';
 import { WebSocket } from "ws";
-
+import { Root } from "@/types/twitch";
+import * as dotenv from "dotenv";
+dotenv.config();
 
 const discord = new Client({
     intents: [
@@ -146,35 +146,3 @@ async function deleteAllSubscriptions(subscriptions: Root) {
         }
     }
 }
-
-export interface Root {
-    total: number
-    data: Daum[]
-    max_total_cost: number
-    total_cost: number
-    pagination: Pagination
-}
-
-export interface Daum {
-    id: string
-    status: string
-    type: string
-    version: string
-    condition: Condition
-    created_at: string
-    transport: Transport
-    cost: number
-}
-
-export interface Condition {
-    broadcaster_user_id: string
-}
-
-export interface Transport {
-    method: string
-    session_id: string
-    connected_at: string
-    disconnected_at: string
-}
-
-export interface Pagination { }

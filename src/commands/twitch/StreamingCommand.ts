@@ -1,5 +1,5 @@
 import { Message } from 'discord.js';
-import { ICommand } from '../index';
+import { ICommand } from '@/commands';
 import { testStream } from '@/services/twitch/TwitchService';
 
 export class StreamingCommand implements ICommand {
