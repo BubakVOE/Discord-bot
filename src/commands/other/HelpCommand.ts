@@ -1,12 +1,21 @@
 import { Message } from 'discord.js';
-import {commands, ICommand} from '../index';
+import { commands, ICommand } from '@/commands';
 
 export class HelpCommand implements ICommand {
     name = 'help';
     async execute(message: Message, args: Array<string>): Promise<void> {
 
-        let command_names = commands.map((command: ICommand) => command.name).join('\n');
+        const prefix = process.env.PREFIX || '';
 
-        message.reply(`Available commands: \`\`\`${command_names}\`\`\``);
+        let command_names = commands.map((command: ICommand) => '\`' + prefix + ' ' + command.name +'\`').join('\n');
+
+        const helpMessage = `
+**Available Commands:**
+${command_names}
+
+*Type \`${prefix}help\` for more information on a specific command.*
+`;
+
+        message.reply(helpMessage);
     }
 }

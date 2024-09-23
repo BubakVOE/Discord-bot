@@ -1,6 +1,6 @@
 import { Message } from 'discord.js';
 import { ICommand } from '../index';
-import { isHeStreaming } from '@/services/twitch/TwitchService';
+import { testStream } from '@/services/twitch/TwitchService';
 
 export class StreamingCommand implements ICommand {
     name = 'streaming';
@@ -8,8 +8,9 @@ export class StreamingCommand implements ICommand {
         message: Message,
         args: Array<string>
     ): Promise<void> {
+
         const channel = args[0] ?? 'bubakvoe';
-        const response = await isHeStreaming(channel);
+        const response = await testStream(channel);
         if (response) {
             message.reply(`Yes, **${channel}** is streaming!`);
         }

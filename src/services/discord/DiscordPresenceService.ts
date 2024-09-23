@@ -13,7 +13,7 @@ export default function discordPresenceService(client: Client) {
             {
                 name: '.help',
                 type: ActivityType.Watching,
-                state: 'Type .help for commands'
+                state: 'Type .help for commands',
             }
         ],
         status: 'online',

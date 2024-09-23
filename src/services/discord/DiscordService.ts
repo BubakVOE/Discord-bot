@@ -30,31 +30,31 @@ function connectedToDiscord() {
 
 function handleMessageCreate(message: Message) {
     if (message.author.bot || !message.content.startsWith(process.env.PREFIX as string)) return;
-    const { commandName, args } = parseCommand(message.content);
+    const { command_name, args } = parseCommand(message.content);
 
-    let command = commands.find((command: ICommand) => command.name === commandName) ?? new NotFoundCommand(args[0]);
+    let command = commands.find((command: ICommand) => command.name === command_name) ?? new NotFoundCommand(args[0]);
 
     command.execute(message, args);
 }
 
 function parseCommand(content: string) {
     if(!process.env.PREFIX) {
-        return { commandName: null, args: ['ENV variable PREFIX not set'] };
+        return { command_name: null, args: ['ENV variable PREFIX not set'] };
     }
 
     if (!content.startsWith(process.env.PREFIX as string)) {
-        return { commandName: null, args: ['Use ' + process.env.PREFIX as string] };
+        return { command_name: null, args: ['Use ' + process.env.PREFIX as string] };
     }
 
     const words = content.split(' ');
 
     if (words.length < 2) {
-        return { commandName: null, args: ['not enough arguments'] };
+        return { command_name: null, args: ['not enough arguments'] };
     }
 
-    const args = content.slice(5).trim().split(/ +/g);
+    const args = content.slice(process.env.PREFIX.length + 1).trim().split(/ +/g);
 
-    const commandName = args.shift()?.toLowerCase();
+    const command_name = args.shift()?.toLowerCase();
 
-    return { commandName, args };
+    return { command_name, args };
 }

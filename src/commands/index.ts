@@ -1,13 +1,13 @@
 import { Message } from 'discord.js';
 // Discord
-import { WhoAmICommand } from './discord/WhoAmICommand';
+import { WhoAmICommand } from '@/commands/discord/WhoAmICommand';
 // Twitch
-import { LiveStreamingCommand } from './twitch/LiveStreamingCommand';
-import { StreamingCommand } from './twitch/StreamingCommand';
+import { LiveStreamingCommand } from '@/commands/twitch/LiveStreamingCommand';
+import { StreamingCommand } from '@/commands/twitch/StreamingCommand';
 // Other
-import { HelpCommand } from './other/HelpCommand';
-import { TestCommand } from './other/TestCommand';
-import { BanCommand } from "./discord/BanCommand";
+import { HelpCommand } from "@/commands/other/HelpCommand";
+import { TestCommand } from "@/commands/other/TestCommand";
+import { BanCommand } from "@/commands/discord/BanCommand";
 
 export interface ICommand {
     name: string;
